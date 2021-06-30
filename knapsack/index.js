@@ -1,35 +1,33 @@
 const knapsack = require('./function')
 
-let v = [
-    {
-        nama : "ABC",
-        berat : 2,
-        harga : 2600000
-    },
-    {
-        nama : "DEF",
-        berat : 3,
-        harga : 2600000
-    },
-    {
-        nama : "GHI",
-        berat : 2,
-        harga : 2450000
-    },
-    {
-        nama : "JKL",
-        berat : 4,
-        harga : 4800000
-    },
-    {
-        nama : "MNO",
-        berat : 5,
-        harga : 5100000
-    },
+const Backpack = [
+  {
+    name: 'ABC',
+    weight: 2,
+    price: 2600000
+  },
+  {
+    name: 'DEF',
+    weight: 3,
+    price: 2600000
+  },
+  {
+    name: 'GHI',
+    weight: 2,
+    price: 2450000
+  },
+  {
+    name: 'JKL',
+    weight: 4,
+    price: 4800000
+  },
+  {
+    name: 'MNO',
+    weight: 5,
+    price: 5100000
+  }
 ]
 
-let berat = v.map(x => {return x.berat}).sort();
-let harga = v.map(z => {return z.harga}).sort()
-let capacity = 7
-let result = new knapsack(berat,harga,capacity);
-result.see()
+const ShowData = new knapsack(Backpack)
+let Result = ShowData.ResultData(7)
+console.log(Result)

@@ -1,53 +1,73 @@
-class Knapsack {
-    constructor(berat,harga,capacity) {
-        this.berat = berat
-        this.harga = harga
-        this.capacity = capacity
+class knapsack {
+  constructor(Backpack) {
+    this.Backpack = Backpack;
+  }
+
+  sortingWeight() {
+    let arr = this.Backpack;
+    for (let i = 1; i < arr.length; i++) { // looping & sorting array ambil satu masukan satu
+      for (let j = i - 1; j >= 0; j--) {
+        {if (arr[j + 1].weight > arr[j].weight) break;}
+        {if (arr[j + 1].weight < arr[j].weight) break;}
+        [arr[j + 1], arr[j]] = [arr[j], arr[j + 1]];
+      }
     }
-    reply(hasil, add){
-        let temp1, temp2
-        for (let i = 1; i < hasil.length; i++) {
-            let j = i
-            temp1 = hasil[i]
-            temp2 = add[i]
-            while (j > 0 && temp1 < hasil[j - 1]) {
-                hasil[j] = hasil[j - 1]
-                add[j] = add[j - 1]
-                j--
-            }
-            hasil[j] = temp1
-            add[j] = temp2
+    return arr;
+  }
+
+  sortingPrice() {
+    let arr = this.Backpack;
+    for (let i = 1; i < arr.length; i++) {
+      for (let j = i - 1; j >= 0; j--) {
+        {if (arr[j + 1].price > arr[j].price) break;}
+        {if (arr[j + 1].price < arr[j].price) break;}
+        [arr[j + 1], arr[j]] = [arr[j], arr[j + 1]];
+      }
+    }
+    return arr;
+  }
+
+  loopingKnapsack(Backpack, full) {
+    let result = [];
+    let price = 0;
+    let rest = full;
+    for (let i = 0; i < Backpack.length; i++) {
+      if (rest < Backpack[i].weight) {
+        rest = rest;
+      } else {
+        rest -= Backpack[i].weight; //penjumlahan
+        price += Backpack[i].price;
+        result.push(Backpack[i]);
+        if (rest === 0) {
+          return { result, price };
         }
-        console.log(hasil)
-        console.log(add)
-        return `Berat : ${add[add.length-1].split('')} (kg) \n harga : Rp. ${hasil[hasil.length-1]}`
+      }
+    }
+    return { result, price }; // hasil looping validasi dan penjumlahan 
+  }
+
+  ResultData(full) {
+    let result =[]; 
+    let price = 0;
+    let container1 = this.loopingKnapsack(this.sortingWeight(), full);
+    if (container1.price > price) {result = container1.result;
+      price = container1.price;
+    }
+    let container2 = this.loopingKnapsack(this.sortingWeight(), full);
+    if (container2.price > price) {result = container2.result;
+      price = container2.price;
+    }
+    let container3 = this.loopingKnapsack(this.sortingPrice(), full);
+    if (container3.price > price) {result = container3.result;
+      price = container3.price;
+    }
+    let container4 = this.loopingKnapsack(this.sortingPrice(),full);
+    if (container4.price > price) {result = container4.result;
+      price = container4.price;
     }
 
-    knapSack() {
-        let berat = this.berat
-        let harga = this.harga
-        let capacity = this.capacity
-
-        let add = []
-        let hasil = []
-        let logic = (s, berat, sp, harga, count) => {
-            for(let i=0; i<berat.length; i++){
-
-                if(s  + berat[i] <= capacity){
-                    add.push(`${sp}${berat[i]}`)
-                    hasil.push(`${count  + harga[i]}`)
-                }
-                logic(s + berat[i], berat.slice(i+1), sp + berat[i], harga.slice(i+1), count + harga[i])
-
-            }
-        }
-        logic(0, berat, '', harga, 0)
-        console.log(this.reply(hasil, add))
-    }
-
-    see() {
-        this.knapSack()
-    }
+    return { result, price };
+  }
 }
 
-module.exports=Knapsack
+module.exports = knapsack;
