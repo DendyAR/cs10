@@ -4,10 +4,7 @@ class Knapsack {
         this.harga = harga
         this.capacity = capacity
     }
-
-    
-
-    max(hasil, add){
+    reply(hasil, add){
         let temp1, temp2
         for (let i = 1; i < hasil.length; i++) {
             let j = i
@@ -23,7 +20,7 @@ class Knapsack {
         }
         console.log(hasil)
         console.log(add)
-        return `Dapat Dimasukan : ${add[add.length-1].split('')} (kg) \n harga : Rp. ${hasil[hasil.length-1]}`
+        return `Berat : ${add[add.length-1].split('')} (kg) \n harga : Rp. ${hasil[hasil.length-1]}`
     }
 
     knapSack() {
@@ -33,22 +30,22 @@ class Knapsack {
 
         let add = []
         let hasil = []
-        let f = (s, berat, sp, harga, count) => {
+        let logic = (s, berat, sp, harga, count) => {
             for(let i=0; i<berat.length; i++){
 
                 if(s  + berat[i] <= capacity){
                     add.push(`${sp}${berat[i]}`)
                     hasil.push(`${count  + harga[i]}`)
                 }
-                f(s + berat[i], berat.slice(i+1), sp + berat[i], harga.slice(i+1), count + harga[i])
+                logic(s + berat[i], berat.slice(i+1), sp + berat[i], harga.slice(i+1), count + harga[i])
 
             }
         }
-        f(0, berat, '', harga, 0)
-        console.log(this.max(hasil, add))
+        logic(0, berat, '', harga, 0)
+        console.log(this.reply(hasil, add))
     }
 
-    choose() {
+    see() {
         this.knapSack()
     }
 }

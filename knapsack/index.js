@@ -32,4 +32,4 @@ let berat = v.map(x => {return x.berat}).sort();
 let harga = v.map(z => {return z.harga}).sort()
 let capacity = 7
 let result = new knapsack(berat,harga,capacity);
-result.choose()
+result.see()
